@@ -1,5 +1,5 @@
 # MISRE
-Code/Examples for A New Approach to Robust Estimation of Parametric Structures
+Code/Examples for "A New Approach to Robust Estimation of Parametric Structures"
 
 ===============================================================
 A New Approach to Robust Estimation of Parametric Structures
@@ -26,16 +26,21 @@ Examples for the following applications are provided:
 3. 3D cylinder estimation (in synthetic and real cloud data)
 4. Moving Object Segmentation using Fundamental matrix
 5. Homography estimation
+6. 3D sphere estimation
+7. 3D plane estimation
 ===============================================================================
 
 ===============================================================================
+#Notice: 
+#The latest version of Python (3.8) and 3rd party packages will also work, 
+#but user should modify the codes accordingly
+
 For general use,
 1. Download 64bit Python 2.7.x from https://www.python.org/downloads/windows/.
 2. Download 64bit version of the following three site-packages for Python 2.7:
 Numpy, OpenCV and Matplotlib from http://www.lfd.uci.edu/~gohlke/pythonlibs/.
 3. After installation, locate the python scripts in the folder "x64 python examples\".
 The user can run the default setting, or specify the preferred input data at the beginning of each script.
-4. For 32bit Python, replace all dlls with the win32 versions in "cpp\bin\win32". 
 ===============================================================================
 
 ===============================================================================
@@ -54,5 +59,5 @@ xiang.yang@rutgers.edu
 Robust Image Understanding Laboratory
 http://coewww.rutgers.edu/riul
 
-NOTE: The code was only tested on Windows 7 os, the dlls (both 32/64 bit versions) in the folder "cpp\bin" are 
+NOTE: The code was only tested on Windows 7 os, the dlls (64 bit versions) in the folder "cpp\bin" are 
 compiled in Visual Studio 2013. Recompilation of the dlls on different platforms may be needed.
