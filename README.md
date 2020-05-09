@@ -1,9 +1,13 @@
 # MISRE
 Code/Examples for "A New Approach to Robust Estimation of Parametric Structures"
 
+
 A New Approach to Robust Estimation of Parametric Structures
+===============================================================================
 Authors: Xiang Yang and Peter Meer and Jonathan Meer
+
 Robust Image Understanding Laboratory, Rutgers University
+
 
 Python/C++ Implementation based on:
 X. Yang and P. Meer and J. Meer "A New Approach to Robust Estimation of Parametric Structures", T-PAMI 2020. 
@@ -22,9 +26,9 @@ Examples for the following applications are provided:
 2. 2D ellipses estimation (in synthetic and real images)
 3. 3D cylinder estimation (in synthetic and real cloud data)
 4. Moving Object Segmentation using Fundamental matrix
-5. Homography estimation
-6. 3D sphere estimation
-7. 3D plane estimation
+5. Homography estimation (with test on Adelaide dataset)
+6. 3D sphere estimation (3D point cloud included)
+7. 3D plane estimation (3D point cloud included)
 ===============================================================================
 
 ===============================================================================
@@ -40,7 +44,6 @@ Numpy, OpenCV and Matplotlib from http://www.lfd.uci.edu/~gohlke/pythonlibs/.
 The user can run the default setting, or specify the preferred input data at the beginning of each script.
 ===============================================================================
 
-===============================================================================
 For modification and recompilation purpose on the C++ source files, go to "cpp\" folder.
 The core functions are located in folder "cpp\sources\common". Each folder for different objective functions 
 consists of four files, which are modified accordingly to specify the computation of carriers, jacobians and the 
