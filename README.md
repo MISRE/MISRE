@@ -7,7 +7,10 @@ A New Approach to Robust Estimation of Parametric Structures
 Authors: Xiang Yang and Peter Meer and Jonathan Meer
 
 Python/C++ Implementation based on:
-X. Yang and P. Meer and J. Meer "A New Approach to Robust Estimation of Parametric Structures", IEEE TPAMI 2020. 
+
+X. Yang and P. Meer and J. Meer 
+
+"A New Approach to Robust Estimation of Parametric Structures", IEEE TPAMI 2020. 
 
 Examples for the following applications are provided:
 1. 2D lines estimation (in synthetic and real images)
@@ -17,7 +20,7 @@ Examples for the following applications are provided:
 5. Homography estimation (with test on Adelaide dataset)
 6. 3D sphere estimation (3D point cloud included)
 7. 3D plane estimation (3D point cloud included)
-===============================================================================
+
 
 ===============================================================================
 #Notice: 
