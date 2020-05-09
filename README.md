@@ -1,13 +1,10 @@
 # MISRE
 Code/Examples for "A New Approach to Robust Estimation of Parametric Structures"
 
-===============================================================
 A New Approach to Robust Estimation of Parametric Structures
 Authors: Xiang Yang and Peter Meer and Jonathan Meer
 Robust Image Understanding Laboratory, Rutgers University
-===============================================================
 
-===============================================================
 Python/C++ Implementation based on:
 X. Yang and P. Meer and J. Meer "A New Approach to Robust Estimation of Parametric Structures", T-PAMI 2020. 
 
@@ -32,8 +29,8 @@ Examples for the following applications are provided:
 
 ===============================================================================
 #Notice: 
-#The latest version of Python (3.8) and 3rd party packages will also work, 
-#but user should modify the codes accordingly
+The latest version of Python (3.8) and 3rd party packages will also work, 
+but user should modify the codes accordingly
 
 For general use,
 1. Download 64bit Python 2.7.x from https://www.python.org/downloads/windows/.
