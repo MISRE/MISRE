@@ -9,11 +9,6 @@ Authors: Xiang Yang and Peter Meer and Jonathan Meer
 Python/C++ Implementation based on:
 X. Yang and P. Meer and J. Meer "A New Approach to Robust Estimation of Parametric Structures", IEEE TPAMI 2020. 
 
-Most robust estimators require tuning the parameters of the algorithm for the particular application, a bottleneck for practical
-applications. The paper presents the Multiple Input Structures with Robust Estimator (MISRE), where each structure, inlier or outlier,
-is processed independently. The same two constants are used to find the scale estimates over expansions for each structure. The
-inlier/outlier classification is straightforward since the data is processed and ordered with the relevant inlier structures listed first. If the inlier noises are similar, MISRE’s performance is equivalent to RANSAC-type algorithms. MISRE still returns the correct inlier estimates when inlier noises are very different, while RANSAC-type algorithms do not perform as well. MISRE’s failures are gradual when too many outliers are present, beginning with the least significant inlier structure. Examples from 2D images and 3D point clouds illustrate the estimation.
-
 Examples for the following applications are provided:
 1. 2D lines estimation (in synthetic and real images)
 2. 2D ellipses estimation (in synthetic and real images)
