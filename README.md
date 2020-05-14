@@ -1,5 +1,6 @@
 # MISRE
 Code/Examples for "A New Approach to Robust Estimation of Parametric Structures"
+
 X. Yang, P. Meer and J. Meer, "A New Approach to Robust Estimation of Parametric Structures," in IEEE Transactions on Pattern Analysis and Machine Intelligence, doi: 10.1109/TPAMI.2020.2994190.
 
 A New Approach to Robust Estimation of Parametric Structures
