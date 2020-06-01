@@ -1,6 +1,7 @@
 #ifndef EXPAND
 #define EXPAND
 
+#include <stddef.h>
 #include "Estimate.h"
 
 typedef std::pair<double, size_t> PAIR_DOUBLE_SIZE_T;

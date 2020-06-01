@@ -7,7 +7,7 @@
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-void MahaDist(InputParam &input, const MatrixXd &remainCarrier, const MatrixXd &remainJacobian,
+void MahaDist(const InputParam &input, const MatrixXd &remainCarrier, const MatrixXd &remainJacobian,
 	const VectorXd &theta, VectorXd &MahaDistance);
 
 #endif

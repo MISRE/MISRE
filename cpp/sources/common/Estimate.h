@@ -9,6 +9,8 @@ and outputs the result in a cpp list object, StructureList.
 #ifndef ESTIMATE
 #define ESTIMATE
 
+#include <stddef.h>
+
 struct InputParam					// general form of inputs
 {
 	const double **inputPtrArray;	// array of pointers of input variables
@@ -32,6 +34,6 @@ typedef std::tuple<double, size_t, double, V_SIZE_T, V_DOUBLE> StructureTuple;
 #include <list> // return type, a list sorted by strengths
 typedef std::list<StructureTuple> StructureList;
 
-StructureList Estimate(InputParam &);
+StructureList Estimate(const InputParam &);
 
 #endif

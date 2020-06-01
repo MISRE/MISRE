@@ -6,7 +6,7 @@
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-void MeanShiftKDE(InputParam &input, const MatrixXd &remainCarrier, const MatrixXd &remainJacobian,
+void MeanShiftKDE(const InputParam &input, const MatrixXd &remainCarrier, const MatrixXd &remainJacobian,
 	const double &scale, VectorXd &theta, double &mode);
 
 #endif
