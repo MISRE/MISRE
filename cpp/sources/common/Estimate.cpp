@@ -6,7 +6,7 @@
 #include "Functions.h"
 #include <algorithm>
 
-StructureList Estimate(InputParam &input)
+StructureList Estimate(const InputParam &input)
 {	
 	StructureList result; // final result	
 	V_SIZE_T remainIndex; // track remaining points

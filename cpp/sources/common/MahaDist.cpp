@@ -1,6 +1,6 @@
 #include "MahaDist.h"
 
-void MahaDist(InputParam &input, const MatrixXd &remainCarrier, const MatrixXd &remainJacobian,
+void MahaDist(const InputParam &input, const MatrixXd &remainCarrier, const MatrixXd &remainJacobian,
 	const VectorXd &theta, VectorXd &MahaDistance)
 {
 	// compute numerators and denominators
