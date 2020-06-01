@@ -24,6 +24,8 @@ import ctypes
 import numpy as np
 import matplotlib.pyplot as plt
 from random import shuffle
+import platform
+
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -70,7 +72,10 @@ def run(iteration):
     plt.show()           
         
     #Ctypes
-    dll = ctypes.CDLL("line.dll")
+    if platform.system() == 'Windows':
+        dll = ctypes.CDLL("line.dll")
+    else:
+        dll = ctypes.CDLL("line.so")
     LineCtypes = dll.LineCtypes
     LineCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),
@@ -106,6 +111,7 @@ def run(iteration):
 
         #Plot TLS lines
         a, b, c = result[structure_count].StructureTLS[: 3]
+        print ('a = {}, b = {}, c = {}'.format(a,b,c)) 
         if b !=0:
             lx = np.linspace(0, rng, 2)
             ly = (-lx * a - c)/b
@@ -114,9 +120,9 @@ def run(iteration):
             ly = np.linspace(0, rng, 2)                
         plt.plot(lx, ly, color=dict_color[structure_count % len(dict_color)], linestyle='-', linewidth=2)
         
-        print "Strength: ", result[structure_count].StructureStrength, \
+        print ("Strength: ", result[structure_count].StructureStrength, \
               "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
+              "Scale: ", result[structure_count].StructureScale)
         
         structure_count += 1
         
@@ -127,5 +133,5 @@ def run(iteration):
         
 if __name__=="__main__":
     for iteration in range(test):        
-        print '\nIteration:', iteration
+        print ('\nIteration:', iteration)
         run(iteration)

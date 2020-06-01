@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 from random import shuffle
 import convertEllipse
+import platform
 
 ###### INPUT DATA ##########
 filename = "stadium"
@@ -50,8 +51,11 @@ def run(iteration):
     cv2.waitKey()
     cv2.destroyAllWindows()
     
-   #Ctypes
-    dll = ctypes.CDLL("ellipse.dll")
+    #Ctypes
+    if platform.system() == 'Windows':
+        dll = ctypes.CDLL("ellipse.dll")
+    else:
+        dll = ctypes.CDLL("ellipse.so")
     EllipseCtypes = dll.EllipseCtypes
     EllipseCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),

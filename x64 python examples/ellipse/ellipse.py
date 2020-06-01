@@ -24,6 +24,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 from random import shuffle
 import convertEllipse
+import platform
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -68,8 +69,11 @@ def run(iteration):
     plt.plot(*zip(*input_data), marker='o', color='k', ls='', ms = 2, lw = 0)       
     plt.show()    
     
-   #Ctypes
-    dll = ctypes.CDLL("ellipse.dll")
+    #Ctypes
+    if platform.system() == 'Windows':
+        dll = ctypes.CDLL("ellipse.dll")
+    else:
+        dll = ctypes.CDLL("ellipse.so")
     EllipseCtypes = dll.EllipseCtypes
     EllipseCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),

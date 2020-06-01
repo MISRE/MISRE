@@ -15,6 +15,7 @@ import ctypes
 import cv2
 import numpy as np
 from match import siftMatch
+import platform 
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -56,7 +57,10 @@ y2 = (ctypes.c_double * inputNum)(*y2)
 
 def run():
     #Ctypes
-    dll = ctypes.CDLL("fundMat.dll")
+    if platform.system() == 'Windows':
+        dll = ctypes.CDLL("fundMat.dll")
+    else:
+        dll = ctypes.CDLL("fundMat.so")
     FundMatCtypes = dll.FundMatCtypes
     FundMatCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),

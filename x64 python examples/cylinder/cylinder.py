@@ -23,6 +23,7 @@ import matplotlib.pyplot as plt
 from random import shuffle
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
+import platform
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -125,7 +126,10 @@ def run(iteration):
 
     
     #Ctypes
-    dll = ctypes.CDLL("Cylinder.dll")
+    if platform.system() == 'Windows':
+        dll = ctypes.CDLL("cylinder.dll")
+    else:
+        dll = ctypes.CDLL("cylinder.so")
     CylinderCtypes = dll.CylinderCtypes
     CylinderCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),
