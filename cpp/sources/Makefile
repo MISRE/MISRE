@@ -28,8 +28,6 @@ OUTPUTFILE5  = fundamental.so
 
 INSTALLDIR  = ../bin
 
-#c++  myclass.cpp -o prog 
-
 INCLUDE_DIRS = -I/usr/local/Cellar/eigen/3.3.7/include/eigen3 -Icommon -Iline
 
 CPPFLAGS = $(INCLUDE_DIRS) -std=c++11 -stdlib=libc++
@@ -37,9 +35,6 @@ CPPFLAGS = $(INCLUDE_DIRS) -std=c++11 -stdlib=libc++
 .PHONY: all
 all: $(OUTPUTFILE1) $(OUTPUTFILE2) $(OUTPUTFILE3) $(OUTPUTFILE4) $(OUTPUTFILE5) # $(OUTPUTFILE6) 
 
-# Build libgeorgeringo.so from george.o, ringo.o, 
-# and georgeringo.o; subst is the search-and-replace 
-# function demonstrated in Recipe 1.16
 $(OUTPUTFILE1): $(subst .cpp,.o,$(SOURCES1)) 
 	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
 
