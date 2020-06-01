@@ -50,3 +50,9 @@ xiang.yang@yahoo.com
 
 NOTE: The code was only tested on Windows 7 os, the dlls (64 bit versions) in the folder "cpp\bin" are 
 compiled in Visual Studio 2013. Recompilation of the dlls on different platforms may be needed.
+
+Compiling on Linux/MacOSX: 
+- Install the Eigen library (for instance 'brew install eigen' on OSX, xxxxxx in Ubuntu)
+- Go to cpp/source and type 'make'
+
+Tested on OSX Mojave (10.14.6) and Ubuntu xxxx
