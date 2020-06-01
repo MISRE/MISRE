@@ -1,0 +1,82 @@
+# Specify extensions of files to delete when cleaning
+CLEANEXTS   = o so
+
+# Specify the source files, the target files, 
+# and the install directory 
+COMMON      = common/Estimate.cpp common/Expand.cpp common/MahaDist.cpp common/MeanShiftKDE.cpp common/Normalize.cpp common/RandomSet.cpp 
+LINE        = line/Functions.cpp line/LineCtypes.cpp
+ELLIPSE     = ellipse/EllipseCtypes.cpp ellipse/Functions.cpp
+HOMOGRAPHY  = homography/Functions.cpp homography/HomographyCtypes.cpp
+CYLINDER    = cylinder/CylinderCtypes.cpp cylinder/Functions.cpp
+FUNDAMENTAL = fundamental_matrix/Functions.cpp fundamental_matrix/FundMatCtypes.cpp
+#PLANE       = plane/
+
+SOURCES1    = $(COMMON) $(LINE)
+SOURCES2    = $(COMMON) $(ELLIPSE)
+SOURCES3    = $(COMMON) $(HOMOGRAPHY)
+SOURCES4    = $(COMMON) $(CYLINDER)
+SOURCES5    = $(COMMON) $(FUNDAMENTAL)
+#SOURCES6    = $(COMMON) $(PLANE)
+
+
+OUTPUTFILE1  = line.so
+OUTPUTFILE2  = ellipse.so
+OUTPUTFILE3  = homography.so
+OUTPUTFILE4  = cylinder.so
+OUTPUTFILE5  = fundamental.so
+#OUTPUTFILE6  = plane.so
+
+INSTALLDIR  = ../bin
+
+#c++  myclass.cpp -o prog 
+
+INCLUDE_DIRS = -I/usr/local/Cellar/eigen/3.3.7/include/eigen3 -Icommon -Iline
+
+CPPFLAGS = $(INCLUDE_DIRS) -std=c++11 -stdlib=libc++
+
+.PHONY: all
+all: $(OUTPUTFILE1) $(OUTPUTFILE2) $(OUTPUTFILE3) $(OUTPUTFILE4) $(OUTPUTFILE5) # $(OUTPUTFILE6) 
+
+# Build libgeorgeringo.so from george.o, ringo.o, 
+# and georgeringo.o; subst is the search-and-replace 
+# function demonstrated in Recipe 1.16
+$(OUTPUTFILE1): $(subst .cpp,.o,$(SOURCES1)) 
+	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
+
+$(OUTPUTFILE2): $(subst .cpp,.o,$(SOURCES2)) 
+	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
+
+$(OUTPUTFILE3): $(subst .cpp,.o,$(SOURCES3)) 
+	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
+
+$(OUTPUTFILE4): $(subst .cpp,.o,$(SOURCES4)) 
+	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
+
+$(OUTPUTFILE5): $(subst .cpp,.o,$(SOURCES5)) 
+	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
+
+#$(OUTPUTFILE6): $(subst .cpp,.o,$(SOURCES6)) 
+#	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
+
+
+.PHONY: install
+install:
+	mkdir -p $(INSTALLDIR)
+	mv -p $(OUTPUTFILE1) $(INSTALLDIR)
+	mv -p $(OUTPUTFILE2) $(INSTALLDIR)
+	mv -p $(OUTPUTFILE3) $(INSTALLDIR)
+	mv -p $(OUTPUTFILE4) $(INSTALLDIR)
+	mv -p $(OUTPUTFILE5) $(INSTALLDIR)
+#	mv -p $(OUTPUTFILE6) $(INSTALLDIR)
+
+.PHONY: clean 
+clean:
+	for file in $(CLEANEXTS); do rm -f *.$$file; done
+
+# Generate dependencies of .ccp files on .hpp files
+include $(subst .cpp,.d,$(SOURCES))
+
+%.d: %.cpp
+	$(CC) -M $(CPPFLAGS)  $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+rm -f $@.$$$$
