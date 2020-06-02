@@ -1,3 +1,19 @@
+# Configure:
+
+# Linux
+EIGEN_INCLUDE_DIR = /usr/include/eigen3
+# Mac OSX
+#EIGEN_INCLUDE_DIR = /usr/local/Cellar/eigen/3.3.7/include/eigen3
+
+# Where the library files are copied
+INSTALLDIR  = ../bin
+
+# End configuration ---------------------------------------------
+
+ifeq ($(OS),Windows_NT)
+	$(error Do not use make to compile on Windows. You need a Visual Studio project)
+endif
+
 # Specify extensions of files to delete when cleaning
 CLEANEXTS   = o so
 
@@ -26,11 +42,17 @@ OUTPUTFILE4  = cylinder.so
 OUTPUTFILE5  = fundamental.so
 #OUTPUTFILE6  = plane.so
 
-INSTALLDIR  = ../bin
+INCLUDE_DIRS = -I$(EIGEN_INCLUDE_DIR) -Icommon -Iline
 
-INCLUDE_DIRS = -I/usr/local/Cellar/eigen/3.3.7/include/eigen3 -Icommon -Iline
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+#	CCFLAGS += $(INCLUDE_DIRS) -std=c++11 
+	CPPFLAGS += $(INCLUDE_DIRS) -std=c++11 -fPIC
+endif
+ifeq ($(UNAME_S),Darwin)
+	CCFLAGS += $(INCLUDE_DIRS) -std=c++11 -stdlib=libc++
+endif
 
-CPPFLAGS = $(INCLUDE_DIRS) -std=c++11 -stdlib=libc++
 
 .PHONY: all
 all: $(OUTPUTFILE1) $(OUTPUTFILE2) $(OUTPUTFILE3) $(OUTPUTFILE4) $(OUTPUTFILE5) # $(OUTPUTFILE6) 
@@ -57,12 +79,12 @@ $(OUTPUTFILE5): $(subst .cpp,.o,$(SOURCES5))
 .PHONY: install
 install:
 	mkdir -p $(INSTALLDIR)
-	mv -p $(OUTPUTFILE1) $(INSTALLDIR)
-	mv -p $(OUTPUTFILE2) $(INSTALLDIR)
-	mv -p $(OUTPUTFILE3) $(INSTALLDIR)
-	mv -p $(OUTPUTFILE4) $(INSTALLDIR)
-	mv -p $(OUTPUTFILE5) $(INSTALLDIR)
-#	mv -p $(OUTPUTFILE6) $(INSTALLDIR)
+	mv -i $(OUTPUTFILE1) $(INSTALLDIR)
+	mv -i $(OUTPUTFILE2) $(INSTALLDIR)
+	mv -i $(OUTPUTFILE3) $(INSTALLDIR)
+	mv -i $(OUTPUTFILE4) $(INSTALLDIR)
+	mv -i $(OUTPUTFILE5) $(INSTALLDIR)
+#	mv -i $(OUTPUTFILE6) $(INSTALLDIR)
 
 .PHONY: clean 
 clean:
@@ -72,6 +94,6 @@ clean:
 include $(subst .cpp,.d,$(SOURCES))
 
 %.d: %.cpp
-	$(CC) -M $(CPPFLAGS)  $< > $@.$$$$; \
+	$(CC) -M $(CCFLAGS)  $< > $@.$$$$; \
 	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
 rm -f $@.$$$$
