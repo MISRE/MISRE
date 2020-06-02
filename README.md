@@ -53,6 +53,7 @@ compiled in Visual Studio 2013. Recompilation of the dlls on different platforms
 
 Compiling on Linux/MacOSX: 
 - Install the Eigen library (for instance 'brew install eigen' on OSX, xxxxxx in Ubuntu)
-- Go to cpp/source and type 'make'
+- Configure cpp/sources/Makefile for your system
+- Go to cpp/source and type 'make ; make install'
 
-Tested on OSX Mojave (10.14.6) and Ubuntu xxxx
+Tested on OSX Mojave (10.14.6) and Ubuntu 18.04.2 LTS
