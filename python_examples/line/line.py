@@ -115,7 +115,7 @@ def run(iteration):
 
         #Plot TLS lines
         a, b, c = result[structure_count].StructureTLS[: 3]
-        print ('a = {}, b = {}, c = {}'.format(a,b,c)) 
+        print ('{}x + {}y + {} = 0'.format(a,b,c)) 
         if b !=0:
             lx = np.linspace(0, rng, 2)
             ly = (-lx * a - c)/b
