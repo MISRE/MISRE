@@ -169,7 +169,7 @@ def run(iteration):
     start_time = time.time()
     result = SphereCtypes(x, y, z, inputNum, trial)
     elapsed_time = time.time() - start_time
-    #print "Time (sec): ", elapsed_time
+    #print ("Time (sec): ", elapsed_time)
     
     #Display result      
     fig = pylab.figure()
@@ -203,9 +203,9 @@ def run(iteration):
         ax.scatter(npXin, npYin, npZin, s = 5, marker='o', 
                    c= dict_color[structure_count % len(dict_color)], lw = 0)
         '''
-        print "Strength: ", result[structure_count].StructureStrength, \
+        print ("Strength: ", result[structure_count].StructureStrength, \
               "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
+              "Scale: ", result[structure_count].StructureScale)
         '''
         structure_count += 1
         
@@ -217,5 +217,5 @@ def run(iteration):
     
 if __name__=="__main__":
     for iteration in range(test):        
-        #print '\nIteration:', iteration
+        #print ('\nIteration:', iteration)
         run(iteration)
