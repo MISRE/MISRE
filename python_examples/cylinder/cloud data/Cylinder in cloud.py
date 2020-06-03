@@ -1,14 +1,22 @@
-###### INPUT DATA ##########
-trial = 2000
-test = 3
-maxDisplayStructure = 4
-########################
-
 import ctypes
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
+import platform
+
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'cylinder'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
+
+###### INPUT DATA ##########
+trial = 2000
+test = 3
+maxDisplayStructure = 4
+########################
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -29,7 +37,7 @@ npXVals = np.float32(x)
 npYVals = np.float32(y)
 npZVals = np.float32(z)
 
-print "Total points: " + str(len(x))
+print ("Total points: " + str(len(x)))
 
 fig = pylab.figure()
 ax = Axes3D(fig)
@@ -51,7 +59,7 @@ ax.scatter(npXVals, npYVals, npZVals, s = 1)
 plt.show()
 
 #Ctypes
-dll = ctypes.CDLL("cylinder.dll")
+dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
 CylinderCtypes = dll.CylinderCtypes
 CylinderCtypes.argtypes = (
                             ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),
@@ -104,9 +112,9 @@ def run(iteration):
             ax.scatter(npXin, npYin, npZin, s = 5, marker='o', 
                        c= dict_color[structure_count % len(dict_color)], lw = 0)
     
-        print "Strength: ", result[structure_count].StructureStrength, \
-              "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
+        print ("Strength: ", result[structure_count].StructureStrength, \
+               "Size: ", structure_size,\
+               "Scale: ", result[structure_count].StructureScale)
         structure_count += 1
         
     plt.show()
@@ -117,5 +125,5 @@ def run(iteration):
 
 if __name__=="__main__":
     for iteration in range(test):        
-        print '\nIteration:', iteration
+        print ('\nIteration:', iteration)
         run(iteration)

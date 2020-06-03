@@ -132,10 +132,7 @@ def run(iteration):
 
     
     #Ctypes
-    if platform.system() == 'Windows':
-        dll = ctypes.CDLL("cylinder.dll")
-    else:
-        dll = ctypes.CDLL("cylinder.so")
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
     CylinderCtypes = dll.CylinderCtypes
     CylinderCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),
@@ -184,9 +181,9 @@ def run(iteration):
         ax.scatter(npXin, npYin, npZin, s = 5, marker='o', 
                    c= dict_color[structure_count % len(dict_color)], lw = 0)
     
-        print "Strength: ", result[structure_count].StructureStrength, \
+        print ("Strength: ", result[structure_count].StructureStrength, \
               "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
+              "Scale: ", result[structure_count].StructureScale)
         structure_count += 1
         
     plt.show()    
@@ -197,5 +194,5 @@ def run(iteration):
     
 if __name__=="__main__":
     for iteration in range(test):        
-        print '\nIteration:', iteration
+        print ('\nIteration:', iteration)
         run(iteration)
