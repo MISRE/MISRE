@@ -5,6 +5,19 @@ Then will try line estimation.
 LINE: [x.Start, y.Start, x.End, y.End, Sigma, Total amount]
 NOISE: [x.Range, y.Range, Total amount]
 '''
+import ctypes
+import numpy as np
+import matplotlib.pyplot as plt
+from random import shuffle
+import platform
+
+
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'line'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
 
 ###### INPUT DATA ##########
 LINE = [[30, 90, 510, 650, 3, 300],
@@ -19,13 +32,6 @@ trial = 1000
 test = 3
 maxDisplayStructure = 5
 #########################
-
-import ctypes
-import numpy as np
-import matplotlib.pyplot as plt
-from random import shuffle
-import platform
-
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -72,10 +78,8 @@ def run(iteration):
     plt.show()           
         
     #Ctypes
-    if platform.system() == 'Windows':
-        dll = ctypes.CDLL("line.dll")
-    else:
-        dll = ctypes.CDLL("line.so")
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
+
     LineCtypes = dll.LineCtypes
     LineCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),

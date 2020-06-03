@@ -6,6 +6,14 @@ import numpy as np
 from random import shuffle
 import platform
 
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'line'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
+
+
 ###### INPUT DATA ##########
 filename = "pole"
 
@@ -50,10 +58,7 @@ def run(iteration):
     cv2.destroyAllWindows()
 
     #Ctypes
-    if platform.system() == 'Windows':
-        dll = ctypes.CDLL("line.dll")
-    else:
-        dll = ctypes.CDLL("line.so")
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
 
     LineCtypes = dll.LineCtypes
     LineCtypes.argtypes = (
