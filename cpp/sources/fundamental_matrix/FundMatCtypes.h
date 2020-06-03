@@ -1,14 +1,14 @@
-/*	EllipseyCtypes.h
+/*	FundMatCtypes.h
 This is a wrapper file to 
 convert output in Ctypes for Python.
 
-x, y: 2D coordinates
+x1, y1, x2, y2 : 2D image pairs
 inputNum : total amount of inputs
 trial : number of trials.
 */
 
-#ifndef ELLIPSECTYPES
-#define ELLIPSECTYPES
+#ifndef FUNDMATCTYPES
+#define FUNDMATCTYPES
 
 #include <stddef.h>
 
@@ -51,11 +51,12 @@ extern "C"
         //_declspec(dllexport)
         DLL_PUBLIC
 		Structure *
-		EllipseCtypes(const double *x, const double *y,
+		FundMatCtypes(const double *x1, const double *y1, 
+						const double *x2, const double *y2,
 						const size_t inputNum, const size_t trial);
 
         //_declspec(dllexport)
-	DLL_PUBLIC
+        DLL_PUBLIC
 		void FreeMemory(Structure *);
 }
 

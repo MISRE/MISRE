@@ -1,11 +1,4 @@
 #!/usr/bin/env python
-
-###### INPUT DATA ##########
-sigma = 0.05
-trial = 1000
-test = 1
-maxDisplayStructure = 6
-########################
 import time
 import ctypes
 import numpy as np
@@ -13,6 +6,23 @@ import matplotlib.pyplot as plt
 from random import shuffle
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
+import platform
+
+
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'plane'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
+
+
+###### INPUT DATA ##########
+sigma = 0.05
+trial = 1000
+test = 1
+maxDisplayStructure = 6
+########################
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -89,7 +99,7 @@ def run(iteration):
 
     
     #Ctypes
-    dll = ctypes.CDLL("plane.dll")
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
     PlaneCtypes = dll.PlaneCtypes
     PlaneCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),

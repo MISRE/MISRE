@@ -5,7 +5,7 @@
 #include <set>
 typedef std::set<size_t> S_SIZE_T;
 
-void RandomSet(V_SIZE_T &pool, size_t elementalSize, V_SIZE_T &subset)
+void RandomSet(const V_SIZE_T &pool, size_t elementalSize, V_SIZE_T &subset)
 {
 	// use current time as random seed
 	static std::default_random_engine generator((unsigned)time(0));

@@ -4,7 +4,7 @@
 #include <Eigen/Dense>
 using Eigen::JacobiSVD;
 
-void CarrierGen(InputParam &input, V_SIZE_T &remainIndex, MatrixXd &carrier)
+void CarrierGen(const InputParam &input, V_SIZE_T &remainIndex, MatrixXd &carrier)
 {
 	double x1, y1, x2, y2;
 	size_t rowIdx = 0;
@@ -22,7 +22,7 @@ void CarrierGen(InputParam &input, V_SIZE_T &remainIndex, MatrixXd &carrier)
 	return;
 }
 
-void JacobianGen(InputParam &input, V_SIZE_T &remainIndex, MatrixXd &jacobian)
+void JacobianGen(const InputParam &input, V_SIZE_T &remainIndex, MatrixXd &jacobian)
 {
 	double x1, y1, x2, y2;
 	size_t rowIdx = 0;
@@ -43,7 +43,7 @@ void JacobianGen(InputParam &input, V_SIZE_T &remainIndex, MatrixXd &jacobian)
 	return;
 }
 
-bool DLTsolve(InputParam &input, V_SIZE_T &subset, VectorXd &theta)
+bool DLTsolve(const InputParam &input, V_SIZE_T &subset, VectorXd &theta)
 {
 	// create homogeneous coords
 	MatrixXd point1(3, subset.size()), point2(3, subset.size());

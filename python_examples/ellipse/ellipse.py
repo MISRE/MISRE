@@ -5,6 +5,20 @@ Then will try ellipse estimation.
 ELLIPSE: [Axis.x, Axis.y, Rotation, x.Translation, y.Translation, Sigma, Total amount]
 NOISE: [x.Range, y.Range, Total amount]
 '''
+import ctypes
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Ellipse
+from random import shuffle
+import convertEllipse
+import platform
+
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'ellipse'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
 
 ###### INPUT DATA ##########
 ELLIPSE = [[200, 200, 0, 350, 350, 3, 300],
@@ -17,13 +31,6 @@ trial = 5000
 test = 3
 maxDisplayStructure = 3
 ########################
-
-import ctypes
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.patches import Ellipse
-from random import shuffle
-import convertEllipse
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -68,8 +75,8 @@ def run(iteration):
     plt.plot(*zip(*input_data), marker='o', color='k', ls='', ms = 2, lw = 0)       
     plt.show()    
     
-   #Ctypes
-    dll = ctypes.CDLL("ellipse.dll")
+    #Ctypes
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
     EllipseCtypes = dll.EllipseCtypes
     EllipseCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),

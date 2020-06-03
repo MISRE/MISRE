@@ -5,6 +5,19 @@ Then will try line estimation.
 LINE: [x.Start, y.Start, x.End, y.End, Sigma, Total amount]
 NOISE: [x.Range, y.Range, Total amount]
 '''
+import ctypes
+import numpy as np
+import matplotlib.pyplot as plt
+from random import shuffle
+import platform
+
+
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'line'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
 
 ###### INPUT DATA ##########
 LINE = [[30, 90, 510, 650, 3, 300],
@@ -19,11 +32,6 @@ trial = 1000
 test = 3
 maxDisplayStructure = 5
 #########################
-
-import ctypes
-import numpy as np
-import matplotlib.pyplot as plt
-from random import shuffle
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -70,7 +78,8 @@ def run(iteration):
     plt.show()           
         
     #Ctypes
-    dll = ctypes.CDLL("line.dll")
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
+
     LineCtypes = dll.LineCtypes
     LineCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),
@@ -106,6 +115,7 @@ def run(iteration):
 
         #Plot TLS lines
         a, b, c = result[structure_count].StructureTLS[: 3]
+        print ('a = {}, b = {}, c = {}'.format(a,b,c)) 
         if b !=0:
             lx = np.linspace(0, rng, 2)
             ly = (-lx * a - c)/b
@@ -114,9 +124,9 @@ def run(iteration):
             ly = np.linspace(0, rng, 2)                
         plt.plot(lx, ly, color=dict_color[structure_count % len(dict_color)], linestyle='-', linewidth=2)
         
-        print "Strength: ", result[structure_count].StructureStrength, \
+        print ("Strength: ", result[structure_count].StructureStrength, \
               "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
+              "Scale: ", result[structure_count].StructureScale)
         
         structure_count += 1
         
@@ -127,5 +137,5 @@ def run(iteration):
         
 if __name__=="__main__":
     for iteration in range(test):        
-        print '\nIteration:', iteration
+        print ('\nIteration:', iteration)
         run(iteration)

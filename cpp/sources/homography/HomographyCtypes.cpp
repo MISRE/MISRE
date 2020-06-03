@@ -1,7 +1,8 @@
 #include "HomographyCtypes.h"
 #include "Estimate.h"
 
-_declspec(dllexport)
+//_declspec(dllexport)
+DLL_PUBLIC
 Structure *
 HomographyCtypes(const double *x1, const double *y1,
 				const double *x2, const double *y2,
@@ -50,7 +51,8 @@ HomographyCtypes(const double *x1, const double *y1,
 	return ctypesStructure;
 }
 
-_declspec(dllexport)
+//_declspec(dllexport)
+DLL_PUBLIC
 void FreeMemory(Structure *ctypesStructure)
 {	
 	int i = 0;

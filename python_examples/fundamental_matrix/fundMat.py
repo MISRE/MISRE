@@ -1,20 +1,28 @@
 #!/usr/bin/env python
 '''
 This script loads input images and matches features using SIFT in OpenCV.
-Then will try Homography matrix estimation.
+Then will try fundamental matrix estimation.
 '''
-###### INPUT DATA ##########
-IMG_1 = 'images/bus_1.JPG'
-IMG_2 = 'images/bus_2.JPG'
-
-trial = 2000
-maxDisplayStructure = 4
-########################
-
 import ctypes
 import cv2
 import numpy as np
 from match import siftMatch
+import platform 
+
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'fundamental'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
+
+###### INPUT DATA ##########
+IMG_1 = 'images/calendar_1.JPG'
+IMG_2 = 'images/calendar_2.JPG'
+
+trial = 5000
+maxDisplayStructure = 4
+########################
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -56,21 +64,21 @@ y2 = (ctypes.c_double * inputNum)(*y2)
 
 def run():
     #Ctypes
-    dll = ctypes.CDLL("homography.dll")
-    HomographyCtypes = dll.HomographyCtypes
-    HomographyCtypes.argtypes = (
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
+    FundMatCtypes = dll.FundMatCtypes
+    FundMatCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),
                                 ctypes.c_size_t, ctypes.c_size_t)
-    HomographyCtypes.restype = ctypes.POINTER(Structure)    
+    FundMatCtypes.restype = ctypes.POINTER(Structure)    
 
     #Estimate multiple inlier structures 
-    result = HomographyCtypes(x1, y1, x2, y2, inputNum, trial)   
+    result = FundMatCtypes(x1, y1, x2, y2, inputNum, trial)   
     
     #Display different structures
     vis[:h1, :w1, :3] = img1_c
     vis[:h2, w1:w1+w2, :3] = img2_c
-    
+        
     structure_count = 0
     max_count = maxDisplayStructure
     while structure_count < max_count and result[structure_count].StructureSize > 0:
@@ -93,7 +101,7 @@ iteration = 0
 color = {0:(0, 0, 255), 1:(0, 255, 0), 2:(255, 0, 0),
          3:(255, 255, 0), 4:(0, 255, 255), 5:(255, 0, 255)}
 while(1):
-    cv2.imshow('Homography [R]: Run, [Q]: Quit',vis)
+    cv2.imshow('Fundamental Matrix [R]: Run, [Q]: Quit',vis)
     k = cv2.waitKey(1) & 0xFF
     if k == ord('r'):
         print '\nIteration', iteration        

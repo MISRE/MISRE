@@ -1,4 +1,19 @@
 #!/usr/bin/env python
+import time
+import ctypes
+import numpy as np
+import matplotlib.pyplot as plt
+from random import shuffle
+import pylab
+from mpl_toolkits.mplot3d import Axes3D
+import platform
+
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'sphere'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
 
 ###### INPUT DATA ##########
 SPHERE = [[2, 10, -26, 0, 0.05, 200],
@@ -10,13 +25,6 @@ trial = 1000
 test = 1
 maxDisplayStructure = 3
 ########################
-import time
-import ctypes
-import numpy as np
-import matplotlib.pyplot as plt
-from random import shuffle
-import pylab
-from mpl_toolkits.mplot3d import Axes3D
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -143,7 +151,7 @@ def run(iteration):
 
     
     #Ctypes
-    dll = ctypes.CDLL("sphere.dll")
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
     SphereCtypes = dll.SphereCtypes
     SphereCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),

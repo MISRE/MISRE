@@ -1,7 +1,8 @@
 #include "LineCtypes.h"
 #include "Estimate.h"
 
-_declspec(dllexport)
+//_declspec(dllexport)
+DLL_PUBLIC
 Structure *
 LineCtypes(const double *x, const double *y,
 				const size_t inputNum, const size_t trial)
@@ -49,7 +50,8 @@ LineCtypes(const double *x, const double *y,
 	return ctypesStructure;
 }
 
-_declspec(dllexport)
+//_declspec(dllexport)
+DLL_PUBLIC
 void FreeMemory(Structure *ctypesStructure)
 {	
 	int i = 0;
