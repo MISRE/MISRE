@@ -3,6 +3,19 @@
 This script loads input images and matches features using SIFT in OpenCV.
 Then will try fundamental matrix estimation.
 '''
+import ctypes
+import cv2
+import numpy as np
+from match import siftMatch
+import platform 
+
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'fundamental'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
+
 ###### INPUT DATA ##########
 IMG_1 = 'images/calendar_1.JPG'
 IMG_2 = 'images/calendar_2.JPG'
@@ -10,12 +23,6 @@ IMG_2 = 'images/calendar_2.JPG'
 trial = 5000
 maxDisplayStructure = 4
 ########################
-
-import ctypes
-import cv2
-import numpy as np
-from match import siftMatch
-import platform 
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -57,10 +64,7 @@ y2 = (ctypes.c_double * inputNum)(*y2)
 
 def run():
     #Ctypes
-    if platform.system() == 'Windows':
-        dll = ctypes.CDLL("fundMat.dll")
-    else:
-        dll = ctypes.CDLL("fundMat.so")
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
     FundMatCtypes = dll.FundMatCtypes
     FundMatCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),

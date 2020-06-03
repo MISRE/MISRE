@@ -7,6 +7,13 @@ from random import shuffle
 import convertEllipse
 import platform
 
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'ellipse'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
+
 ###### INPUT DATA ##########
 filename = "stadium"
 
@@ -52,10 +59,7 @@ def run(iteration):
     cv2.destroyAllWindows()
     
     #Ctypes
-    if platform.system() == 'Windows':
-        dll = ctypes.CDLL("ellipse.dll")
-    else:
-        dll = ctypes.CDLL("ellipse.so")
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
     EllipseCtypes = dll.EllipseCtypes
     EllipseCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),

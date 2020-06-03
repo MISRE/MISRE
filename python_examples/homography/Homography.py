@@ -3,6 +3,19 @@
 This script loads input images and matches features using SIFT in OpenCV.
 Then will try Homography matrix estimation.
 '''
+import ctypes
+import cv2
+import numpy as np
+from match import siftMatch
+import platform
+
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'homography'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
+
 ###### INPUT DATA ##########
 IMG_1 = 'images/bus_1.JPG'
 IMG_2 = 'images/bus_2.JPG'
@@ -10,12 +23,6 @@ IMG_2 = 'images/bus_2.JPG'
 trial = 2000
 maxDisplayStructure = 4
 ########################
-
-import ctypes
-import cv2
-import numpy as np
-from match import siftMatch
-import platform
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -57,10 +64,7 @@ y2 = (ctypes.c_double * inputNum)(*y2)
 
 def run():
     #Ctypes
-    if platform.system() == 'Windows':
-        dll = ctypes.CDLL("Homography.dll")
-    else:
-        dll = ctypes.CDLL("Homography.so")
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
     HomographyCtypes = dll.HomographyCtypes
     HomographyCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),

@@ -5,6 +5,20 @@ Then will try cylinder estimation.
 CYLINDER: [Radius, Height, Center.x, Center.y, Center.z, Sigma, Total amount]
 NOISE: [Total amount]
 '''
+import ctypes
+import numpy as np
+import matplotlib.pyplot as plt
+from random import shuffle
+import pylab
+from mpl_toolkits.mplot3d import Axes3D
+import platform
+
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'cylinder'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
 
 ###### INPUT DATA ##########
 CYLINDER = [[2, 3, 50, -20, 3, 0.06, 400],
@@ -16,14 +30,6 @@ trial = 5000
 test = 3
 maxDisplayStructure = 3
 ########################
-
-import ctypes
-import numpy as np
-import matplotlib.pyplot as plt
-from random import shuffle
-import pylab
-from mpl_toolkits.mplot3d import Axes3D
-import platform
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
