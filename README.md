@@ -48,12 +48,15 @@ Please report any inconsistencies/bugs/suggestions to:
 Xiang Yang
 xiang.yang@yahoo.com
 
-NOTE: The code was only tested on Windows 7 os, the dlls (64 bit versions) in the folder "cpp\bin" are 
+NOTE: The code was tested on Windows 7 os, the dlls (64 bit versions) in the folder "cpp\bin" are 
 compiled in Visual Studio 2013. Recompilation of the dlls on different platforms may be needed.
 
 Compiling on Linux/MacOSX: 
-- Install the Eigen library (for instance 'brew install eigen' on OSX, xxxxxx in Ubuntu)
+- Install the Eigen library (for instance 'brew install eigen' on OSX, 'sudo apt install libeigen3-dev' in Ubuntu)
 - Configure cpp/sources/Makefile for your system
 - Go to cpp/source and type 'make ; make install'
 
 Tested on OSX Mojave (10.14.6) and Ubuntu 18.04.2 LTS
+
+For each python example, configure at the beginning of the file the folder where the dynamic 
+libaries are installed (should match the Makefile)
