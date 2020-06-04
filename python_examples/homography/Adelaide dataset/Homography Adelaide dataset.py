@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 import platform
 
-LIB_FOLDER = '../../cpp/bin'
+LIB_FOLDER = '../../../cpp/bin'
 LIB_NAME   = 'homography'
 if platform.system() == 'Windows':
     LIB_EXTENSION = 'dll'
