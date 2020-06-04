@@ -10,7 +10,7 @@ import platform
 
 
 LIB_FOLDER = '../../cpp/bin'
-LIB_NAME   = 'line'
+LIB_NAME   = 'sphere'
 if platform.system() == 'Windows':
     LIB_EXTENSION = 'dll'
 else:
@@ -32,7 +32,7 @@ class Structure(ctypes.Structure):
 def input_Gen():
     input_data = []
 
-    f = open("bb8 50k.txt")
+    f = open("bb8_50k.txt")
     n = 0
     for line in f:
         if n%5 == 0:        
