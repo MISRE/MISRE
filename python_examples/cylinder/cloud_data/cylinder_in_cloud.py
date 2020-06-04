@@ -5,7 +5,7 @@ import pylab
 from mpl_toolkits.mplot3d import Axes3D
 import platform
 
-LIB_FOLDER = '../../cpp/bin'
+LIB_FOLDER = '../../../cpp/bin'
 LIB_NAME   = 'cylinder'
 if platform.system() == 'Windows':
     LIB_EXTENSION = 'dll'
@@ -41,7 +41,7 @@ print ("Total points: " + str(len(x)))
 
 fig = pylab.figure()
 ax = Axes3D(fig)
-ax.set_aspect('equal')
+#ax.set_aspect('equal')
 ax.set_xlabel("X")
 ax.set_ylabel("Y")
 ax.set_zlabel("Z")
@@ -79,7 +79,7 @@ def run(iteration):
     #Display result      
     fig = pylab.figure()
     ax = Axes3D(fig)
-    ax.set_aspect('equal')
+    #ax.set_aspect('equal')
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
     ax.set_zlabel("Z")
