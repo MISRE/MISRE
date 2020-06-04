@@ -114,7 +114,7 @@ def run(iteration):
     npZVals = np.float32(z)
     fig = pylab.figure()
     ax = Axes3D(fig)
-    ax.set_aspect('equal')
+    # ax.set_aspect('equal') #Not implemented in current matplotlib version
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
     ax.set_zlabel("Z")
@@ -152,7 +152,7 @@ def run(iteration):
     #Display result      
     fig = pylab.figure()
     ax = Axes3D(fig)
-    ax.set_aspect('equal')
+    # ax.set_aspect('equal') #Not implemented in current matplotlib version
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
     ax.set_zlabel("Z")
