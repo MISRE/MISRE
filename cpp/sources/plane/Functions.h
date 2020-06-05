@@ -15,8 +15,8 @@ be modified accordingly.
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-void CarrierGen(InputParam &, V_SIZE_T &, MatrixXd &);
-void JacobianGen(InputParam &, V_SIZE_T &, MatrixXd &);
-bool DLTsolve(InputParam &, V_SIZE_T &, VectorXd &);
+void CarrierGen(const InputParam &, const V_SIZE_T &, MatrixXd &);
+void JacobianGen(const InputParam &, const V_SIZE_T &, MatrixXd &);
+bool DLTsolve(const InputParam &, const V_SIZE_T &, VectorXd &);
 
 #endif

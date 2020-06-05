@@ -3,6 +3,19 @@
 This script loads input images and paired data.
 Then will try homography estimation.
 '''
+import ctypes
+import cv2
+import numpy as np
+import platform
+
+LIB_FOLDER = '../../../cpp/bin'
+LIB_NAME   = 'homography'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
+
+
 ###### INPUT DATA ##########
 filename = "unionhouse"
 
@@ -21,11 +34,7 @@ for line in f:
     x1, y1, x2, y2 = line.split()   
     kp_pairs.append([(float(x1), float(y1)),(float(x2), float(y2))])    
 f.close()
-print 'Total Match:', len(kp_pairs)
-
-import ctypes
-import cv2
-import numpy as np
+print ('Total Match:', len(kp_pairs))
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -61,7 +70,7 @@ y2 = (ctypes.c_double * inputNum)(*y2)
 
 def run():    
     #Ctypes
-    dll = ctypes.CDLL("Homography.dll")
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
     HomographyCtypes = dll.HomographyCtypes
     HomographyCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),
@@ -85,9 +94,9 @@ def run():
             cv2.circle(vis, (int(mx1), int(my1)), 4, color[structure_count % len(color)], -1)
             cv2.circle(vis, (int(mx2) + w1, int(my2)), 4, color[structure_count % len(color)], -1)            
 
-        print "Strength: ", result[structure_count].StructureStrength, \
+        print ("Strength: ", result[structure_count].StructureStrength, \
               "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
+              "Scale: ", result[structure_count].StructureScale)
         structure_count += 1
         
     #Free memory
@@ -100,7 +109,7 @@ while(1):
     cv2.imshow('Homography [R]: Run, [Q]: Quit',vis)
     k = cv2.waitKey(1) & 0xFF
     if k == ord('r'):
-        print '\nIteration', iteration        
+        print ('\nIteration', iteration)        
         run()
         iteration += 1
     elif k == ord('q'):

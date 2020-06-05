@@ -169,7 +169,7 @@ def run(iteration):
     start_time = time.time()
     result = SphereCtypes(x, y, z, inputNum, trial)
     elapsed_time = time.time() - start_time
-    #print "Time (sec): ", elapsed_time
+    #print ("Time (sec): ", elapsed_time)
     
     #Display result      
     fig = pylab.figure()
@@ -190,6 +190,13 @@ def run(iteration):
     while structure_count < max_count and result[structure_count].StructureSize > 0:
         structure_size = result[structure_count].StructureSize
 
+        # Print sphere parameters
+        a, b, c, r = result[structure_count].StructureTLS[: 4]
+        signa = '-' if a>=0 else '+' 
+        signb = '-' if b>=0 else '+'
+        signc = '-' if c>=0 else '+'
+        print ('(x{}{})^2 + (y{}{})^2 + (z{}{})^2 = {}^2'.format(signa,abs(a),signb,abs(b),signc,abs(c),r))
+
         Xin = []; Yin = []; Zin =[]
         for idx in result[structure_count].StructureIndex[: structure_size]:
             mx, my, mz = input_data[idx][:3]
@@ -202,11 +209,11 @@ def run(iteration):
 
         ax.scatter(npXin, npYin, npZin, s = 5, marker='o', 
                    c= dict_color[structure_count % len(dict_color)], lw = 0)
-        '''
-        print "Strength: ", result[structure_count].StructureStrength, \
+
+        print ("Strength: ", result[structure_count].StructureStrength, \
               "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
-        '''
+              "Scale: ", result[structure_count].StructureScale)
+
         structure_count += 1
         
     plt.show()    
@@ -217,5 +224,5 @@ def run(iteration):
     
 if __name__=="__main__":
     for iteration in range(test):        
-        #print '\nIteration:', iteration
+        #print ('\nIteration:', iteration)
         run(iteration)

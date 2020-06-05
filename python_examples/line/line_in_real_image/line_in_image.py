@@ -6,7 +6,7 @@ import numpy as np
 from random import shuffle
 import platform
 
-LIB_FOLDER = '../../cpp/bin'
+LIB_FOLDER = '../../../cpp/bin'
 LIB_NAME   = 'line'
 if platform.system() == 'Windows':
     LIB_EXTENSION = 'dll'

@@ -113,9 +113,10 @@ def run(iteration):
                         result[structure_count].StructureIndex[: structure_size]]),
                  marker='o', color= dict_color[structure_count % len(dict_color)], ls='', ms = 5, lw = 0)       
 
-        #Plot TLS lines
+        # Print line parameters
         a, b, c = result[structure_count].StructureTLS[: 3]
-        print ('a = {}, b = {}, c = {}'.format(a,b,c)) 
+        print ('{}x + {}y + {} = 0'.format(a,b,c)) 
+        #Plot TLS lines
         if b !=0:
             lx = np.linspace(0, rng, 2)
             ly = (-lx * a - c)/b

@@ -125,9 +125,9 @@ def run(iteration):
         except:
             pass
     
-        print "Strength: ", result[structure_count].StructureStrength, \
+        print ("Strength: ", result[structure_count].StructureStrength, \
               "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
+              "Scale: ", result[structure_count].StructureScale)
         structure_count += 1
         
     plt.show()
@@ -137,5 +137,5 @@ def run(iteration):
         
 if __name__=="__main__":
     for iteration in range(test):        
-        print '\nIteration:', iteration
+        print ('\nIteration:', iteration)
         run(iteration)

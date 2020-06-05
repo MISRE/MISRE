@@ -1,7 +1,8 @@
 #include "PlaneCtypes.h"
 #include "Estimate.h"
 
-_declspec(dllexport)
+//_declspec(dllexport)
+DLL_PUBLIC
 Structure *
 PlaneCtypes(const double *x, const double *y, const double *z,
 				const size_t inputNum, const size_t trial)
@@ -49,7 +50,8 @@ PlaneCtypes(const double *x, const double *y, const double *z,
 	return ctypesStructure;
 }
 
-_declspec(dllexport)
+//_declspec(dllexport)
+DLL_PUBLIC
 void FreeMemory(Structure *ctypesStructure)
 {	
 	int i = 0;

@@ -1,10 +1,4 @@
 #!/usr/bin/env python
-
-###### INPUT DATA ##########
-trial = 1000
-test = 1
-maxDisplayStructure = 4
-########################
 import time
 import ctypes
 import numpy as np
@@ -12,6 +6,21 @@ import matplotlib.pyplot as plt
 from random import shuffle
 import pylab
 from mpl_toolkits.mplot3d import Axes3D
+import platform
+
+
+LIB_FOLDER = '../../cpp/bin'
+LIB_NAME   = 'sphere'
+if platform.system() == 'Windows':
+    LIB_EXTENSION = 'dll'
+else:
+    LIB_EXTENSION = 'so'
+
+###### INPUT DATA ##########
+trial = 1000
+test = 1
+maxDisplayStructure = 4
+########################
 
 class Structure(ctypes.Structure):
     _fields_=[("StructureStrength", ctypes.c_double),                    
@@ -23,7 +32,7 @@ class Structure(ctypes.Structure):
 def input_Gen():
     input_data = []
 
-    f = open("bb8 50k.txt")
+    f = open("bb8_50k.txt")
     n = 0
     for line in f:
         if n%5 == 0:        
@@ -34,7 +43,7 @@ def input_Gen():
     #Shuffle input data
     shuffle(input_data)
     
-    #print "size: ", len(input_data)
+    #print ("size: ", len(input_data))
     return input_data
 
 
@@ -71,7 +80,7 @@ def run(iteration):
 
     
     #Ctypes
-    dll = ctypes.CDLL("sphere.dll")
+    dll = ctypes.CDLL("{}/{}.{}".format(LIB_FOLDER, LIB_NAME, LIB_EXTENSION))
     SphereCtypes = dll.SphereCtypes
     SphereCtypes.argtypes = (
                                 ctypes.POINTER(ctypes.c_double), ctypes.POINTER(ctypes.c_double),
@@ -89,7 +98,7 @@ def run(iteration):
     start_time = time.time()
     result = SphereCtypes(x, y, z, inputNum, trial)
     elapsed_time = time.time() - start_time
-    #print "Time (sec): ", elapsed_time
+    #print ("Time (sec): ", elapsed_time)
     
     #Display result      
     fig = pylab.figure()
@@ -131,9 +140,9 @@ def run(iteration):
         ax.scatter(npXin, npYin, npZin, s = 20, marker='o', 
                    c= dict_color[structure_count % len(dict_color)], lw = 0)
         '''
-        print "Strength: ", result[structure_count].StructureStrength, \
+        print ("Strength: ", result[structure_count].StructureStrength, \
               "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
+              "Scale: ", result[structure_count].StructureScale)
         '''
         structure_count += 1
 
@@ -157,5 +166,5 @@ def run(iteration):
     
 if __name__=="__main__":
     for iteration in range(test):        
-        #print '\nIteration:', iteration
+        #print ('\nIteration:', iteration)
         run(iteration)

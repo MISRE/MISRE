@@ -35,7 +35,7 @@ class Structure(ctypes.Structure):
 img1 = cv2.imread(IMG_1, 0)
 img2 = cv2.imread(IMG_2, 0)
 kp_pairs = siftMatch(img1, img2)
-print 'Total Match:', len(kp_pairs)
+print ('Total Match:', len(kp_pairs))
 
 #Display all matches and collect inputs
 img1_c = cv2.imread(IMG_1,cv2.IMREAD_COLOR)
@@ -88,9 +88,9 @@ def run():
             cv2.circle(vis, (int(mx1), int(my1)), 4, color[structure_count % len(color)], -1)
             cv2.circle(vis, (int(mx2) + w1, int(my2)), 4, color[structure_count % len(color)], -1)            
 
-        print "Strength: ", result[structure_count].StructureStrength, \
-              "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
+        print ("Strength: ", result[structure_count].StructureStrength, \
+               "Size: ", structure_size,\
+               "Scale: ", result[structure_count].StructureScale)
         structure_count += 1
         
     #Free memory
@@ -104,7 +104,7 @@ while(1):
     cv2.imshow('Fundamental Matrix [R]: Run, [Q]: Quit',vis)
     k = cv2.waitKey(1) & 0xFF
     if k == ord('r'):
-        print '\nIteration', iteration        
+        print ('\nIteration', iteration)
         run()
         iteration += 1
     elif k == ord('q'):

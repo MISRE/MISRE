@@ -1,9 +1,9 @@
 # Configure:
 
 # Linux
-EIGEN_INCLUDE_DIR = /usr/include/eigen3
+#EIGEN_INCLUDE_DIR = /usr/include/eigen3
 # Mac OSX
-#EIGEN_INCLUDE_DIR = /usr/local/Cellar/eigen/3.3.7/include/eigen3
+EIGEN_INCLUDE_DIR = /usr/local/Cellar/eigen/3.3.7/include/eigen3
 
 # Where the library files are copied
 INSTALLDIR  = ../bin
@@ -25,37 +25,39 @@ ELLIPSE     = ellipse/EllipseCtypes.cpp ellipse/Functions.cpp
 HOMOGRAPHY  = homography/Functions.cpp homography/HomographyCtypes.cpp
 CYLINDER    = cylinder/CylinderCtypes.cpp cylinder/Functions.cpp
 FUNDAMENTAL = fundamental_matrix/Functions.cpp fundamental_matrix/FundMatCtypes.cpp
-#PLANE       = plane/
+PLANE       = plane/Functions.cpp plane/PlaneCtypes.cpp
+SPHERE      = sphere/Functions.cpp sphere/SphereCtypes.cpp
+
 
 SOURCES1    = $(COMMON) $(LINE)
 SOURCES2    = $(COMMON) $(ELLIPSE)
 SOURCES3    = $(COMMON) $(HOMOGRAPHY)
 SOURCES4    = $(COMMON) $(CYLINDER)
 SOURCES5    = $(COMMON) $(FUNDAMENTAL)
-#SOURCES6    = $(COMMON) $(PLANE)
-
+SOURCES6    = $(COMMON) $(PLANE)
+SOURCES7    = $(COMMON) $(SPHERE)
 
 OUTPUTFILE1  = line.so
 OUTPUTFILE2  = ellipse.so
 OUTPUTFILE3  = homography.so
 OUTPUTFILE4  = cylinder.so
 OUTPUTFILE5  = fundamental.so
-#OUTPUTFILE6  = plane.so
+OUTPUTFILE6  = plane.so
+OUTPUTFILE7  = sphere.so
 
 INCLUDE_DIRS = -I$(EIGEN_INCLUDE_DIR) -Icommon -Iline
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
-#	CCFLAGS += $(INCLUDE_DIRS) -std=c++11 
 	CPPFLAGS += $(INCLUDE_DIRS) -std=c++11 -fPIC
 endif
 ifeq ($(UNAME_S),Darwin)
-	CCFLAGS += $(INCLUDE_DIRS) -std=c++11 -stdlib=libc++
+	CPPFLAGS += $(INCLUDE_DIRS) -std=c++11 -stdlib=libc++
 endif
 
 
 .PHONY: all
-all: $(OUTPUTFILE1) $(OUTPUTFILE2) $(OUTPUTFILE3) $(OUTPUTFILE4) $(OUTPUTFILE5) # $(OUTPUTFILE6) 
+all: $(OUTPUTFILE1) $(OUTPUTFILE2) $(OUTPUTFILE3) $(OUTPUTFILE4) $(OUTPUTFILE5) $(OUTPUTFILE6) $(OUTPUTFILE7) 
 
 $(OUTPUTFILE1): $(subst .cpp,.o,$(SOURCES1)) 
 	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
@@ -72,8 +74,11 @@ $(OUTPUTFILE4): $(subst .cpp,.o,$(SOURCES4))
 $(OUTPUTFILE5): $(subst .cpp,.o,$(SOURCES5)) 
 	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
 
-#$(OUTPUTFILE6): $(subst .cpp,.o,$(SOURCES6)) 
-#	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
+$(OUTPUTFILE6): $(subst .cpp,.o,$(SOURCES6)) 
+	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
+
+$(OUTPUTFILE7): $(subst .cpp,.o,$(SOURCES7)) 
+	$(CXX) -shared -fPIC $(INCLUDE_DIRS) $(LDFLAGS) -o $@ $^
 
 
 .PHONY: install
@@ -84,7 +89,8 @@ install:
 	mv -i $(OUTPUTFILE3) $(INSTALLDIR)
 	mv -i $(OUTPUTFILE4) $(INSTALLDIR)
 	mv -i $(OUTPUTFILE5) $(INSTALLDIR)
-#	mv -i $(OUTPUTFILE6) $(INSTALLDIR)
+	mv -i $(OUTPUTFILE6) $(INSTALLDIR)
+	mv -i $(OUTPUTFILE7) $(INSTALLDIR)
 
 .PHONY: clean 
 clean:

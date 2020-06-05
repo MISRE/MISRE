@@ -7,7 +7,7 @@ from random import shuffle
 import convertEllipse
 import platform
 
-LIB_FOLDER = '../../cpp/bin'
+LIB_FOLDER = '../../../cpp/bin'
 LIB_NAME   = 'ellipse'
 if platform.system() == 'Windows':
     LIB_EXTENSION = 'dll'
@@ -44,7 +44,7 @@ def input_Gen():
     return input_data_list
 
 input_data = input_Gen()
-print "total input: ", len(input_data)
+print ("total input: ", len(input_data))
 
     
 def run(iteration):
@@ -97,13 +97,13 @@ def run(iteration):
             TLSestimate.append(item)
         try:
             x, y, w, h, rot = convertEllipse.ellipse_general_to_standard(*TLSestimate)            
-            cv2.ellipse(img, (int(x),int(y)), (int(w),int(h)), rot / 3.14 * 180 , 0, 360, dict_color[structure_count % len(dict_color)], 2)
+            cv2.ellipse(img, (int(x),int(y)), (int(w),int(h)), rot / np.pi * 180 , 0, 360, dict_color[structure_count % len(dict_color)], 2)
         except:
             pass
         
-        print "Strength: ", result[structure_count].StructureStrength, \
-              "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
+        print ("Strength: ", result[structure_count].StructureStrength, \
+               "Size: ", structure_size,\
+               "Scale: ", result[structure_count].StructureScale)
         structure_count += 1    
 
     cv2.imshow('ellipse', img)
@@ -115,5 +115,5 @@ def run(iteration):
         
 if __name__=="__main__":
     for iteration in range(test):        
-        print '\nIteration:', iteration
+        print ('\nIteration:', iteration)
         run(iteration)

@@ -117,7 +117,7 @@ def run(iteration):
     start_time = time.time()
     result = PlaneCtypes(x, y, z, inputNum, trial)
     elapsed_time = time.time() - start_time
-    #print "Time (sec): ", elapsed_time
+    print ("Time (sec): {}".format(elapsed_time))
     
     #Display result      
     fig = pylab.figure()
@@ -143,6 +143,9 @@ def run(iteration):
     plotted = []
     while structure_count < max_count and result[structure_count].StructureSize > 0:
         structure_size = result[structure_count].StructureSize
+        #Plot TLS planes
+        a, b, c, d = result[structure_count].StructureTLS[: 4]
+        print ('{}x + {}y + {}z + {} = 0'.format(a,b,c,d)) 
 
         Xin = []; Yin = []; Zin =[]
         for idx in result[structure_count].StructureIndex[: structure_size]:
@@ -158,13 +161,13 @@ def run(iteration):
         ax.scatter(npXin, npYin, npZin, s = 20, marker='o', 
                    c= dict_color[structure_count % len(dict_color)], lw = 0)
         '''
-        print "Strength: ", result[structure_count].StructureStrength, \
+        print ("Strength: ", result[structure_count].StructureStrength, \
               "Size: ", structure_size,\
-              "Scale: ", result[structure_count].StructureScale
+              "Scale: ", result[structure_count].StructureScale)
         '''
         structure_count += 1
 
-    writebb8 = open("bb8 plane.txt", 'w')
+    writebb8 = open("bb8_plane.txt", 'w')
     Xin_k = []; Yin_k = []; Zin_k =[]
     for idx in range(len(input_data)):
         if not idx in plotted:
@@ -189,5 +192,5 @@ def run(iteration):
     
 if __name__=="__main__":
     for iteration in range(test):        
-        #print '\nIteration:', iteration
+        #print ('\nIteration:', iteration)
         run(iteration)

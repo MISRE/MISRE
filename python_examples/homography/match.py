@@ -4,7 +4,11 @@ import numpy as np
 
 def siftMatch(img1, img2, ratio = 0.8):
     FLANN_INDEX_KDTREE = 0
-    detector = cv2.SIFT()
+    cv_version = list(map(int,cv2.__version__.split('.')))
+    if cv_version[0] > 2 and cv_version[1] > 0:
+        detector = cv2.xfeatures2d.SIFT_create()
+    else:
+        detector = cv2.SIFT()
     flann_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
     search_params = dict(checks = 50)
     matcher = cv2.FlannBasedMatcher(flann_params, search_params)    
@@ -20,5 +24,5 @@ def siftMatch(img1, img2, ratio = 0.8):
             mkp2.append(kp2[m.trainIdx])
     mkp1 = [np.float32(kp.pt) for kp in mkp1]
     mkp2 = [np.float32(kp.pt) for kp in mkp2]
-    kp_pairs = zip(mkp1, mkp2)
+    kp_pairs = list(zip(mkp1, mkp2))
     return kp_pairs
