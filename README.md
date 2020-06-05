@@ -53,6 +53,7 @@ compiled in Visual Studio 2013. Recompilation of the dlls on different platforms
 
 
 Updated on Jun/03/2020
+
 Mr. Josep Ramon Morros provided the compilation support on Linux/MacOSX, and many critical modifications on the codes.
 Python 3 and latest version of OpenCV are now supported under his contribution.
 We sincerely thank him for his work.
